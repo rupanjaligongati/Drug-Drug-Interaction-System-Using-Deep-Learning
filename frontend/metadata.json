@@ -1,0 +1,5 @@
+{
+  "name": "Drug-Drug Interaction Prediction System",
+  "description": "An AI-powered healthcare SaaS platform that predicts and analyzes potential interaction risks between drugs using advanced machine learning models.",
+  "requestFramePermissions": []
+}

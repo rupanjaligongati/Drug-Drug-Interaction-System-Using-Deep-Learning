@@ -1,0 +1,52 @@
+============================================================
+DRUG-DRUG INTERACTION MODEL - EVALUATION REPORT
+============================================================
+
+MODEL ARCHITECTURE:
+------------------------------------------------------------
+Input features: 34
+Hidden layers: 512 -> 256 -> 128 -> 64
+Output: 1 (Sigmoid activation)
+Optimizer: Adam (lr=0.001)
+Loss: Binary Crossentropy
+
+DATASET STATISTICS:
+------------------------------------------------------------
+Training samples: 306465
+Testing samples: 76617
+Positive samples (train): 153233
+Negative samples (train): 153232
+
+PERFORMANCE METRICS:
+------------------------------------------------------------
+Accuracy:  0.6303 (63.03%)
+Precision: 0.6637
+Recall:    0.5282
+F1-Score:  0.5883
+ROC-AUC:   0.6615
+
+CONFUSION MATRIX:
+------------------------------------------------------------
+True Negatives:  28057
+False Positives: 10252
+False Negatives: 18073
+True Positives:  20235
+
+CLASSIFICATION REPORT:
+------------------------------------------------------------
+                precision    recall  f1-score   support
+
+No Interaction       0.61      0.73      0.66     38309
+   Interaction       0.66      0.53      0.59     38308
+
+      accuracy                           0.63     76617
+     macro avg       0.64      0.63      0.63     76617
+  weighted avg       0.64      0.63      0.63     76617
+
+============================================================
+NOTES:
+============================================================
+- This model is for educational purposes only
+- Does not replace professional medical advice
+- Should be validated with clinical experts before deployment
+============================================================
