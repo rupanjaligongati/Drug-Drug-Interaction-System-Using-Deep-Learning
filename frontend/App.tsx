@@ -75,7 +75,8 @@ const App: React.FC = () => {
         if (!token) {
           return;
         }
-        const resp = await fetch('http://localhost:8000/history/me', {
+        const apiUrl = (import.meta as any).env?.VITE_API_URL || "http://localhost:8000";
+        const resp = await fetch(`${apiUrl}/history/me`, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,

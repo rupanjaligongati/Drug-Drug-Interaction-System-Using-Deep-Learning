@@ -42,7 +42,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onBack, onLogin }) => {
     try {
       if (isSignUp) {
         // Registration - send OTP
-        const response = await fetch('http://localhost:8000/auth/register', {
+        const apiUrl = (import.meta as any).env?.VITE_API_URL || "http://localhost:8000";
+        const response = await fetch(`${apiUrl}/auth/register`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -87,7 +88,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onBack, onLogin }) => {
   };
 
   const handleResendOTP = async () => {
-    const response = await fetch('http://localhost:8000/auth/resend-otp', {
+    const apiUrl = (import.meta as any).env?.VITE_API_URL || "http://localhost:8000";
+    const response = await fetch(`${apiUrl}/auth/resend-otp`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: pendingEmail })
