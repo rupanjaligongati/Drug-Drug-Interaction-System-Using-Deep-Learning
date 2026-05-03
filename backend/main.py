@@ -65,33 +65,39 @@ async def lifespan(app: FastAPI):
             logger.error(f"✗ Database initialization failed: {e}")
             logger.warning("⚠ API will run but database features will be disabled")
         
-        # Load ML model
-        logger.info("Loading ML model...")
-        try:
-            ddi_service.load_model()
-            logger.info("✓ ML model loaded successfully")
-        except Exception as e:
-            logger.error(f"✗ Model loading failed: {e}")
-            logger.warning("⚠ Predictions will fail until model is loaded")
+        import threading
         
-        # Load Explainable AI data
-        logger.info("Loading Explainable AI service...")
-        try:
-            explainable_ai_service.load_data()
-            logger.info("✓ Explainable AI service ready")
-        except Exception as e:
-            logger.warning(f"⚠ Explainable AI service failed to load: {e}")
-        
-        # Load Recommendation service data
-        logger.info("Loading Recommendation service...")
-        try:
-            recommendation_service.load_data()
-            logger.info("✓ Recommendation service ready")
-        except Exception as e:
-            logger.warning(f"⚠ Recommendation service failed to load: {e}")
+        def load_heavy_models():
+            # Load ML model
+            logger.info("Loading ML model in background...")
+            try:
+                ddi_service.load_model()
+                logger.info("✓ ML model loaded successfully")
+            except Exception as e:
+                logger.error(f"✗ Model loading failed: {e}")
+                logger.warning("⚠ Predictions will fail until model is loaded")
+            
+            # Load Explainable AI data
+            logger.info("Loading Explainable AI service...")
+            try:
+                explainable_ai_service.load_data()
+                logger.info("✓ Explainable AI service ready")
+            except Exception as e:
+                logger.warning(f"⚠ Explainable AI service failed to load: {e}")
+            
+            # Load Recommendation service data
+            logger.info("Loading Recommendation service...")
+            try:
+                recommendation_service.load_data()
+                logger.info("✓ Recommendation service ready")
+            except Exception as e:
+                logger.warning(f"⚠ Recommendation service failed to load: {e}")
+                
+        # Start loading in background thread to avoid blocking port binding (Render timeout issue)
+        threading.Thread(target=load_heavy_models, daemon=True).start()
         
         logger.info("="*60)
-        logger.info("API is ready to accept requests!")
+        logger.info("API is ready to accept requests! Models are loading in background.")
         logger.info("="*60)
         
     except Exception as e:
